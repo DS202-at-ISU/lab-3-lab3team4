@@ -30,9 +30,6 @@ head(av)
 
 library(tidyverse)
 
-av %>%
-  select (Name.Alias, starts_with("Death")) %>%
-  head()
 
 deaths <- av %>%
   pivot_longer(starts_with("Death"), names_to = "Time", values_to = "Died")
