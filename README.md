@@ -65,6 +65,40 @@ head(av)
     ## 5                                                      Dies in Fear Itself brought back because that's kind of the whole point. Second death in Time Runs Out has not yet returned
     ## 6                                                                                                                                                                             <NA>
 
+``` r
+library(tidyverse)
+```
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.0.2     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+deaths <- av %>%
+  pivot_longer(starts_with("Death"), names_to = "Time", values_to = "Died") %>% 
+  select(
+    URL, Name.Alias, Time, Died
+  )
+deaths$Time <- parse_number(deaths$Time)
+View(deaths)
+
+
+returns <- av %>%
+  pivot_longer(starts_with("Return"), names_to = "Time", values_to = "Return") %>% 
+  select(
+    URL, Name.Alias, Time, Return
+  )
+returns$Time <- parse_number(returns$Time)
+View(returns)
+```
+
 Get the data into a format where the five columns for Death\[1-5\] are
 replaced by two columns: Time, and Death. Time should be a number
 between 1 and 5 (look into the function `parse_number`); Death is a
@@ -75,6 +109,18 @@ Similarly, deal with the returns of characters.
 
 Based on these datasets calculate the average number of deaths an
 Avenger suffers.
+
+``` r
+avengers <- length(unique(deaths[["URL"]]))
+numdeaths <- deaths %>% count(Died) %>% filter(Died == "YES")
+
+avg_deaths <- numdeaths$n / avengers
+avg_deaths
+```
+
+    ## [1] 0.5144509
+
+Each avenger averages 0.5144509 deaths.
 
 ## Individually
 
@@ -101,3 +147,72 @@ fact-checking endeavor.
 
 Upload your changes to the repository. Discuss and refine answers as a
 team.
+
+#### Anna:
+
+Statement: “I counted 89 total deaths — some unlucky Avengers7 are
+basically Meat Loaf with an E-ZPass — and on 57 occasions the individual
+made a comeback”
+
+``` r
+numdeaths <- deaths %>% count(Died) %>% filter(Died == "YES")
+print(numdeaths)
+```
+
+    ## # A tibble: 1 × 2
+    ##   Died      n
+    ##   <chr> <int>
+    ## 1 YES      89
+
+``` r
+comeback <- returns %>% filter(Return == "YES")
+print(count(comeback))
+```
+
+    ## # A tibble: 1 × 1
+    ##       n
+    ##   <int>
+    ## 1    57
+
+From the Avengers Data there is a total of 89 deaths and in total there
+are 57 returns of them coming back to life (aka making a comeback). This
+means that Five-Thirty-Eight Analysis was correct in its statement about
+89 total deaths and 57 comeback occasions.
+
+#### Croix:
+
+“Out of 173 listed Avengers, my analysis found that 69 had died at least
+one time after they joined the team.”
+
+``` r
+one_plus_deaths <- deaths %>% 
+  group_by(URL, Died) %>% 
+  summarise(
+    mostdeaths = max(Time)
+  ) %>% 
+  filter(
+    Died == 'YES'
+  ) %>% nrow()
+```
+
+    ## `summarise()` has grouped output by 'URL'. You can override using the `.groups`
+    ## argument.
+
+``` r
+one_plus_deaths
+```
+
+    ## [1] 69
+
+The above code through the summarise function finds the total amount of
+times each Avenger died. However all Avengers are included in this
+dataframe. Those avengers who never died still have a mostdeaths value
+of 1, however have a Died value of “NO”. By filtering to only the rows
+where Died has a value of “YES”, we get the list of all the Avengers who
+have died, along with the total deaths they experienced, so by getting
+the number of rows we get the number of Avengers who have died at least
+once. This number is 69, which agrees with the article.
+
+#### Srishti:
+
+#### Brianna:
