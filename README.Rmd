@@ -86,42 +86,48 @@ Include at least one sentence discussing the result of your fact-checking endeav
 Upload your changes to the repository. Discuss and refine answers as a team.
 
 
-Anna: 
+#### Anna: 
+Statement: "I counted 89 total deaths — some unlucky Avengers7 are basically Meat Loaf with an E-ZPass — and on 57 occasions the individual made a comeback"
+
+```{R}
+numdeaths <- deaths %>% count(Died) %>% filter(Died == "YES")
+print(numdeaths)
+
+comeback <- returns %>% filter(Return == "YES")
+print(count(comeback))
+
+```
+From the Avengers Data there is a total of 89 deaths and in total there are 57 returns of them coming back to life (aka making a comeback). This means that Five-Thirty-Eight Analysis was correct in its statement about 89 total deaths and 57 comeback occasions. 
 
 
 
 
 
+
+#### Croix: 
+"Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
+```{R}
+one_plus_deaths <- deaths %>% 
+  group_by(URL, Died) %>% 
+  summarise(
+    mostdeaths = max(Time)
+  ) %>% 
+  filter(
+    Died == 'YES'
+  ) %>% nrow()
+one_plus_deaths
+```
+The above code through the summarise function finds the total amount of times each Avenger died. However all Avengers are included in this dataframe. Those avengers who never died still have a mostdeaths value of 1, however have a Died value of "NO". By filtering to only the rows where Died has a value of "YES", we get the list of all the Avengers who have died, along with the total deaths they experienced, so by getting the number of rows we get the number of Avengers who have died at least once. This number is 69, which agrees with the article.
+
+
+
+#### Srishti:
 ```{R}
 
 
 ```
 
-
-
-
-
-
-
-Croix: 
-
-
-```{R}
-
-
-```
-
-
-
-
-
-Srishti:
-```{R}
-
-
-```
-
-Brianna:
+#### Brianna:
 ```{R}
 #"There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife"
 #Find total number of first deaths
