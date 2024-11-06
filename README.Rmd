@@ -128,27 +128,28 @@ The above code through the summarise function finds the total amount of times ea
 ```
 
 #### Brianna:
+"There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife"
 ```{R}
-#"There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife"
-#Find total number of first deaths
-#put total number of first returns over that
+
 
 deathsNReturns <- merge(deaths, returns, by =c("URL", "Time"))
-#Observations: There is no Return value on a column if the character did not die that time. I can simply count the number of return=YES on time = 1 columns and place that over the number of return = YES + return = NO rows for time =  1
 
-?filter
+
 filter(deathsNReturns, Time == 1)
+
 yReturn <- filter(deathsNReturns, Return == "YES", na.rm = TRUE)
 nrow(yReturn)
-#This provides the number of times an Avenger returned from their first death
+
 
 nReturn <- filter(deathsNReturns, Return == "NO", na.rm = TRUE)
 nrow(nReturn)
-#This provides the number of times an Avenger did Not return from their first death
 
-#This set of data shows that these Avengers returned from their first death 57 times and did not return from their first death 32 times. This provides a return rate of 57/89, which is just below the 2-3 chance described in the article but not by enough to dispute it as false.
 ```
+Observations: There is no Return value on a column if the character did not die that time. I can simply count the number of return=YES on time = 1 columns and place that over the number of return = YES + return = NO rows for time =  1
 
+The yReturn data provides the number of times an Avenger returned from their first death
 
+The nReturn provides the number of times an Avenger did Not return from their first death
 
+This set of data shows that these Avengers returned from their first death 57 times and did not return from their first death 32 times. This provides a return rate of 57/89, which is just below the 2-3 chance described in the article but not by enough to dispute it as false.
 
