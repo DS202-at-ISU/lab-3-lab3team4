@@ -105,10 +105,16 @@ From the Avengers Data there is a total of 89 deaths and in total there are 57 r
 
 
 #### Croix: 
-
-
+"Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
 ```{R}
-
+deaths %>% 
+  group_by(URL, Died) %>% 
+  summarise(
+    mostdeaths = max(Time)
+  ) %>% 
+  filter(
+    Died == 'YES'
+  ) %>% nrow()
 
 ```
 
