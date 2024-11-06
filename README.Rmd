@@ -104,10 +104,16 @@ Anna:
 
 
 Croix: 
-
-
+"Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
 ```{R}
-
+deaths %>% 
+  group_by(URL, Died) %>% 
+  summarise(
+    mostdeaths = max(Time)
+  ) %>% 
+  filter(
+    Died == 'YES'
+  ) %>% nrow()
 
 ```
 
