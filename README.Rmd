@@ -43,7 +43,7 @@ View(deaths)
 returns <- av %>%
   pivot_longer(starts_with("Return"), names_to = "Time", values_to = "Return") %>% 
   select(
-    URL, Name.Alias, Time, Died
+    URL, Name.Alias, Time, Return
   )
 returns$Time <- parse_number(returns$Time)
 View(returns)
