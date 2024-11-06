@@ -56,13 +56,13 @@ Similarly, deal with the returns of characters.
 
 Based on these datasets calculate the average number of deaths an Avenger suffers. 
 ```{r}
-avengers <- length(unique(deaths[["Name.Alias"]]))
+avengers <- length(unique(deaths[["URL"]]))
 numdeaths <- deaths %>% count(Died) %>% filter(Died == "YES")
 
 avg_deaths <- numdeaths$n / avengers
 avg_deaths
 ```
-Each avenger averages 0.5460123 deaths.
+Each avenger averages 0.5144509 deaths.
 
 
 ## Individually
