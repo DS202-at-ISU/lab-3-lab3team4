@@ -107,7 +107,7 @@ From the Avengers Data there is a total of 89 deaths and in total there are 57 r
 #### Croix: 
 "Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
 ```{R}
-deaths %>% 
+one_plus_deaths <- deaths %>% 
   group_by(URL, Died) %>% 
   summarise(
     mostdeaths = max(Time)
@@ -115,10 +115,9 @@ deaths %>%
   filter(
     Died == 'YES'
   ) %>% nrow()
-
+one_plus_deaths
 ```
-
-
+The above code through the summarise function finds the total amount of times each Avenger died. However all Avengers are included in this dataframe. Those avengers who never died still have a mostdeaths value of 1, however have a Died value of "NO". By filtering to only the rows where Died has a value of "YES", we get the list of all the Avengers who have died, along with the total deaths they experienced, so by getting the number of rows we get the number of Avengers who have died at least once. This number is 69, which agrees with the article.
 
 
 
