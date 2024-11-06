@@ -32,13 +32,19 @@ library(tidyverse)
 
 
 deaths <- av %>%
-  pivot_longer(starts_with("Death"), names_to = "Time", values_to = "Died")
+  pivot_longer(starts_with("Death"), names_to = "Time", values_to = "Died") %>% 
+  select(
+    URL, Name.Alias, Time, Died
+  )
 deaths$Time <- parse_number(deaths$Time)
 View(deaths)
 
 
 returns <- av %>%
-  pivot_longer(starts_with("Return"), names_to = "Time", values_to = "Return")
+  pivot_longer(starts_with("Return"), names_to = "Time", values_to = "Return") %>% 
+  select(
+    URL, Name.Alias, Time, Died
+  )
 returns$Time <- parse_number(returns$Time)
 View(returns)
 
