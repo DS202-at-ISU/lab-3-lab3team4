@@ -87,16 +87,17 @@ Upload your changes to the repository. Discuss and refine answers as a team.
 
 
 Anna: 
-
-
-
-
+Statement: "I counted 89 total deaths — some unlucky Avengers7 are basically Meat Loaf with an E-ZPass — and on 57 occasions the individual made a comeback"
 
 ```{R}
+numdeaths <- deaths %>% count(Died) %>% filter(Died == "YES")
+print(numdeaths)
 
+comeback <- returns %>% filter(Return == "YES")
+print(count(comeback))
 
 ```
-
+From the Avengers Data there is a total of 89 deaths and in total there are 57 returns of them coming back to life (aka making a comeback). This means that Five-Thirty-Eight Analysis was correct in its statement about 89 total deaths and 57 comeback occasions. 
 
 
 
